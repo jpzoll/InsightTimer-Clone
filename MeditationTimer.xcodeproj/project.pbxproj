@@ -14,6 +14,9 @@
 		609185232AC0D628009E6C25 /* TimerInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609185222AC0D628009E6C25 /* TimerInputView.swift */; };
 		609185272AC0D7DD009E6C25 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609185262AC0D7DD009E6C25 /* TimerView.swift */; };
 		609E4EEB2AC1FEDD00D3F10A /* MeditationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609E4EEA2AC1FEDD00D3F10A /* MeditationSession.swift */; };
+		609E4EED2AC2043800D3F10A /* tibetan-bell-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 609E4EEC2AC2043800D3F10A /* tibetan-bell-sound.mp3 */; };
+		609E4EF02AC204E800D3F10A /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609E4EEF2AC204E800D3F10A /* SoundManager.swift */; };
+		609E4EF22AC2245C00D3F10A /* ForLater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609E4EF12AC2245C00D3F10A /* ForLater.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +28,9 @@
 		609185222AC0D628009E6C25 /* TimerInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerInputView.swift; sourceTree = "<group>"; };
 		609185262AC0D7DD009E6C25 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		609E4EEA2AC1FEDD00D3F10A /* MeditationSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeditationSession.swift; sourceTree = "<group>"; };
+		609E4EEC2AC2043800D3F10A /* tibetan-bell-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "tibetan-bell-sound.mp3"; sourceTree = "<group>"; };
+		609E4EEF2AC204E800D3F10A /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
+		609E4EF12AC2245C00D3F10A /* ForLater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForLater.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +47,8 @@
 		609185082AC0D571009E6C25 = {
 			isa = PBXGroup;
 			children = (
+				609E4EF12AC2245C00D3F10A /* ForLater.swift */,
+				609E4EEF2AC204E800D3F10A /* SoundManager.swift */,
 				609E4EEA2AC1FEDD00D3F10A /* MeditationSession.swift */,
 				609185132AC0D571009E6C25 /* MeditationTimer */,
 				609185122AC0D571009E6C25 /* Products */,
@@ -63,6 +71,7 @@
 				609185262AC0D7DD009E6C25 /* TimerView.swift */,
 				609185142AC0D571009E6C25 /* MeditationTimerApp.swift */,
 				609185182AC0D573009E6C25 /* Assets.xcassets */,
+				609E4EEE2AC2044100D3F10A /* Sounds */,
 				6091851A2AC0D573009E6C25 /* Preview Content */,
 			);
 			path = MeditationTimer;
@@ -74,6 +83,14 @@
 				6091851B2AC0D573009E6C25 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		609E4EEE2AC2044100D3F10A /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				609E4EEC2AC2043800D3F10A /* tibetan-bell-sound.mp3 */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,6 +153,7 @@
 			files = (
 				6091851C2AC0D573009E6C25 /* Preview Assets.xcassets in Resources */,
 				609185192AC0D573009E6C25 /* Assets.xcassets in Resources */,
+				609E4EED2AC2043800D3F10A /* tibetan-bell-sound.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,6 +169,8 @@
 				609185172AC0D571009E6C25 /* ContentView.swift in Sources */,
 				609185272AC0D7DD009E6C25 /* TimerView.swift in Sources */,
 				609185152AC0D571009E6C25 /* MeditationTimerApp.swift in Sources */,
+				609E4EF22AC2245C00D3F10A /* ForLater.swift in Sources */,
+				609E4EF02AC204E800D3F10A /* SoundManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

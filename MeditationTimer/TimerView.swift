@@ -6,20 +6,45 @@
 //
 
 import SwiftUI
+import AVKit
 
 struct TimerView: View {
     // Meditation Session passed from TimerInput View
     @ObservedObject var meditationSession: MeditationSession
+    @Environment(\.dismiss) var dismiss
+    @State var soundManager = SoundManager()
     
-    @State private var minutesLeft: Int
-    @State private var secondsLeft: Int
-//    init(minutesLeft: Int, secondsLeft: Int) {
-//        self.minutesLeft = minutesLeft
-//        self.secondsLeft = secondsLeft
+    
+    var timeString: String {
+        var secondString = String(meditationSession.secondsLeft)
+        var minuteString = String(meditationSession.minutesLeft) + ":"
+        var hourString = String(meditationSession.hoursLeft) + ":"
+        
+        // Checking for single or double digit, and removing hour string if no necessary
+        if meditationSession.secondsLeft < 10 { secondString = "0" + secondString }
+        if meditationSession.minutesLeft < 10 { minuteString = "0" + minuteString }
+        if meditationSession.hoursLeft < 10 { hourString = "0" + hourString }
+        if meditationSession.hoursLeft == 0 { hourString = "" }
+        
+        return hourString + minuteString + secondString
+        
+    }
+    
+//    var timeString: String {
+//        meditationSession.secondsLeft >= 10 ?
+//             "\(meditationSession.minutesLeft):\(meditationSession.secondsLeft)" :
+//                "\(meditationSession.minutesLeft):0\(meditationSession.secondsLeft)"
 //    }
     
-    @State private var minutePercentage = 1.0
-    @State private var isRunningTimer = false
+//    @State private var meditationSession.minutesLeft: Int
+//    @State private var meditationSession.secondsLeft: Int
+////    init(meditationSession.minutesLeft: Int, meditationSession.secondsLeft: Int) {
+////        self.meditationSession.minutesLeft = meditationSession.minutesLeft
+////        self.meditationSession.secondsLeft = meditationSession.secondsLeft
+////    }
+//
+//    @State private var minutePercentage = 1.0
+//    @State private var meditationSession.isRunningTimer = false
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     var body: some View {
@@ -27,73 +52,92 @@ struct TimerView: View {
             Color.black
                 .ignoresSafeArea()
             VStack {
-                Text(secondsLeft >= 10 ?
-                     "\(minutesLeft):\(secondsLeft)" :
-                        "\(minutesLeft):0\(secondsLeft)")
-                .font(.largeTitle)
+                Spacer()
+                Text(timeString)
+                .font(.system(size: 72))
+                .fontWeight(.thin)
                 .foregroundColor(.white)
                 .shadow(color: .black, radius: 30)
-                .frame(width: 95, height: 50)
+                .frame(maxWidth: 350, maxHeight: 300)
                 .cornerRadius(20)
                 .onReceive(timer) { _ in
-                    if isRunningTimer && (minutesLeft >= 0) && (secondsLeft > 0) {
-                        secondsLeft -= 1
-                    } else if isRunningTimer && (minutesLeft > 0) {
-                        minutesLeft -= 1
-                        secondsLeft = 59
-                    } else {
-                        isRunningTimer = false
+                    
+                    ///
+                    // TIMER COUNTDOWN LOGIC
+                    ///
+                    if meditationSession.isRunningTimer {
+                        if meditationSession.secondsLeft > 0 {
+                    /// Decrement seconds if there are more than 0 seconds left
+                            meditationSession.secondsLeft -= 1
+                        } else if meditationSession.minutesLeft > 0 {
+                    /// Decrement minutes and reset seconds to 59 when seconds reach 0
+                            meditationSession.minutesLeft -= 1
+                            meditationSession.secondsLeft = 59
+                        } else if meditationSession.hoursLeft > 0 {
+                    /// Decrement hours, reset minutes and seconds to 59 when minutes reach 0
+                            meditationSession.hoursLeft -= 1
+                            meditationSession.minutesLeft = 59
+                            meditationSession.secondsLeft = 59
+                        } else {
+                    /// Timer and meditation are complete, **STOP** the timer!
+                            meditationSession.isRunningTimer = false
+                    ///
+                    // END COUNTDOWN LOGIC
+                    ///
+                        }
                     }
                 }
-                VStack(spacing: 20) {
-                    if !isRunningTimer {
-//                        Button {
-//                            if isRunningTimer {
-//                                isRunningTimer = false
-//                            } else {
-//                                minutesLeft = 5
-//                                secondsLeft = 0
-//                            }
-//                        } label: {
-//                            Image(systemName: isRunningTimer ? "pause" : "circle.fill")
-//                        }
+                Spacer()
+                VStack {
                         
                         // Quit Session
-                        VStack(spacing: 10) {
-                            Button("Discard Session") {
-                                print("discard")
+                    VStack(spacing: 15) {
+                        if !meditationSession.isRunningTimer {
+                                Button("Discard Session") {
+                                    dismiss()
+                                    meditationSession.reset()
+                                }
+                                .textCase(.uppercase)
+                                .font(.system(size: 15))
+                                .padding()
+                                .frame(width: 305, height: 45)
+                                .foregroundColor(.white)
+                                .background(.gray)
+                                .cornerRadius(5)
+                                
+                                Button("Finish") {
+                                    dismiss()
+                                    meditationSession.reset()
+                                }
+                                .textCase(.uppercase)
+                                .font(.system(size: 15))
+                                .padding()
+                                .frame(width: 305, height: 45)
+                                .foregroundColor(.gray)
+                                .background(.white)
+                                .cornerRadius(5)
                             }
-                            .textCase(.uppercase)
-                            .font(.caption)
-                            .padding()
-                            .frame(width: 200, height: 40)
-                            .foregroundColor(.white)
-                            .background(.gray)
-                            Button("Finish") {
+                        }
+                        .frame(width: 250, height: 100)
+                    VStack {
+                        Button {
+                            withAnimation(.linear(duration: 0.55)) {
+                                meditationSession.isRunningTimer.toggle()
                             }
-                            .textCase(.uppercase)
-                            .font(.caption)
-                            .padding()
-                            .frame(width: 200, height: 40)
-                            .foregroundColor(.gray)
-                            .background(.white)
+                        } label: {
+                            Image(systemName: meditationSession.isRunningTimer ? "pause" : "play.fill")
+                                .resizable()
                         }
+                        .foregroundColor(.white)
+                        .frame(width: 25, height: 25)
+                        .padding(.top, 30)
+                        .padding(.bottom, 40)
                     }
-                    Button {
-                        withAnimation(.easeIn) {
-                            isRunningTimer.toggle()
-                        }
-                    } label: {
-                        Image(systemName: isRunningTimer ? "pause" : "play")
-                    }
-                    .foregroundColor(.white)
-//                    Button("Accelerate") {
-//                        if secondsLeft > 10 {
-//                            secondsLeft -= 10
-//                        }
-//                    }
                 }
             }
+        }
+        .onAppear {
+            soundManager.playSound()
         }
     }
 }
@@ -101,6 +145,6 @@ struct TimerView: View {
 //struct TimerView_Previews: PreviewProvider {
 //    @State var isPresented = false
 //    static var previews: some View {
-//        TimerView(minutesLeft: 5, secondsLeft: 0, isPresented: $isPresented)
+//        TimerView(meditationSession.minutesLeft: 5, meditationSession.secondsLeft: 0, isPresented: $isPresented)
 //    }
 //}
