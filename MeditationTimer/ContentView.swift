@@ -33,7 +33,7 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            Color.gray
+            Color.black
                 .ignoresSafeArea()
             VStack {
                 ForEach(options) { option in
@@ -61,7 +61,7 @@ struct ContentView: View {
             }
         }
         .sheet(isPresented: $isShowing) {
-            TimerInput()
+            TimerInputView()
         }
     }
 }
