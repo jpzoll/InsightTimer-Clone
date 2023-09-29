@@ -26,4 +26,14 @@ class SoundManager {
     func playSound() {
         sound?.play()
     }
+    
+    func playSound2() {
+        guard let url = Bundle.main.url(forResource: "bell-ding-sound", withExtension: ".mp3") else { return }
+        
+        if let player = try? AVAudioPlayer(contentsOf: url) {
+            sound = player
+            sound?.play()
+            return
+        }
+    }
 }
