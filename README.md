@@ -5,4 +5,6 @@ A Demo Clone for one of the most popular meditation apps in the world -- Insight
   <img src="img/github/demo.gif" width="250">
 </div>
 
-<img src="img/github/timerInput.png" width="250">    <img src="img/github/duration.png" width="250">    <img src="img/github/timerRunning.png" width="250">
+<div align="center" >
+  <img src="img/github/timerInput.png" width="250">    <img src="img/github/duration.png" width="250">    <img src="img/github/timerRunning.png" width="250">
+</div>
